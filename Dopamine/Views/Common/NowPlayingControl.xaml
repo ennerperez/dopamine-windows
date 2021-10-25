@@ -9,7 +9,7 @@
                             xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:dc="clr-namespace:Digimezzo.Foundation.WPF.Controls;assembly=Digimezzo.Foundation.WPF"
-                            xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+                            xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.WPF.DragDrop"
                             mc:Ignorable="d"
                             d:DesignHeight="300" 
                             d:DesignWidth="300"
