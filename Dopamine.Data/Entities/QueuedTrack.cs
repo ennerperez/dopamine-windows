@@ -1,10 +1,12 @@
-﻿using SQLite;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dopamine.Data.Entities
 {
     public class QueuedTrack
     {
-        [PrimaryKey(), AutoIncrement()]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long QueuedTrackID { get; set; }
 
         public string Path { get; set; }

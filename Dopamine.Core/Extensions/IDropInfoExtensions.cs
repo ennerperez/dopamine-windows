@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
+using Avalonia.Input;
 
 namespace Dopamine.Core.Extensions
 {
@@ -13,13 +14,13 @@ namespace Dopamine.Core.Extensions
         {
             DataObject dataObject = dropInfo.Data as DataObject;
 
-            return dataObject != null && dataObject.GetDataPresent(DataFormats.FileDrop);
+            return dataObject != null; // && dataObject.GetDataPresent(DataFormats.FileDrop); TODO:
         }
 
         public static bool IsDraggingDirectories(this IDropInfo dropInfo)
         {
             DataObject dataObject = dropInfo.Data as DataObject;
-            StringCollection directoryNames = dataObject.GetFileDropList();
+            var directoryNames = dataObject.GetFileNames(); //GetFileDropList TODO:
             
             foreach (string directoryName in directoryNames)
             {
@@ -35,7 +36,7 @@ namespace Dopamine.Core.Extensions
         public static bool IsDraggingMediaFiles(this IDropInfo dropInfo)
         {
             DataObject dataObject = dropInfo.Data as DataObject;
-            StringCollection filenames = dataObject.GetFileDropList();
+            var filenames = dataObject.GetFileNames(); //.GetFileDropList();TODO:
             string[] supportedExtensions = FileFormats.SupportedMediaExtensions;
 
             foreach (string filename in filenames)
@@ -52,7 +53,7 @@ namespace Dopamine.Core.Extensions
         public static bool IsDraggingStaticPlaylistFiles(this IDropInfo dropInfo)
         {
             DataObject dataObject = dropInfo.Data as DataObject;
-            StringCollection filenames = dataObject.GetFileDropList();
+            var filenames = dataObject.GetFileNames(); //.GetFileDropList();TODO:
             string[] supportedExtensions = FileFormats.SupportedStaticPlaylistExtensions;
 
             foreach (string filename in filenames)
@@ -69,7 +70,7 @@ namespace Dopamine.Core.Extensions
         public static bool IsDraggingSmartPlaylistFiles(this IDropInfo dropInfo)
         {
             DataObject dataObject = dropInfo.Data as DataObject;
-            StringCollection filenames = dataObject.GetFileDropList();
+            var filenames = dataObject.GetFileNames(); //.GetFileDropList();TODO:
             string[] supportedExtensions = FileFormats.SupportedSmartPlaylistExtensions;
 
             foreach (string filename in filenames)
@@ -86,7 +87,7 @@ namespace Dopamine.Core.Extensions
         public static IList<string> GetDroppedFilenames(this IDropInfo dropInfo)
         {
             DataObject dataObject = dropInfo.Data as DataObject;
-            IList<string> filenames = dataObject.GetFileDropList().Cast<string>().ToList();
+            IList<string> filenames = dataObject.GetFileNames().Cast<string>().ToList(); //.GetFileDropList() TODO:
 
             return filenames;
         }

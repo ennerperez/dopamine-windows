@@ -1,17 +1,17 @@
 ﻿using Digimezzo.Foundation.Core.Settings;
 using Dopamine.Core.Base;
-using SQLite;
-using System;
+
 using System.IO;
+using Microsoft.Data.Sqlite;
 
 namespace Dopamine.Data
 {
     public class SQLiteConnectionFactory : ISQLiteConnectionFactory
     {
         public string DatabaseFile => Path.Combine(SettingsClient.ApplicationFolder(), ProductInformation.ApplicationName + ".db");
-        public SQLiteConnection GetConnection()
+        public SqliteConnection GetConnection()
         {
-            return new SQLiteConnection(this.DatabaseFile) { BusyTimeout = new TimeSpan(0, 0, 0, 10) };
+            return new SqliteConnection(this.DatabaseFile) { DefaultTimeout = 10*1000 };
         }
     }
 }

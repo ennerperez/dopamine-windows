@@ -1,12 +1,14 @@
 ﻿using Dopamine.Core.Extensions;
-using SQLite;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dopamine.Data.Entities
 {
     public class Track
     {
-        [PrimaryKey(), AutoIncrement()]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long TrackID { get; set; }
 
         public string Artists { get; set; }

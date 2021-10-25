@@ -1,10 +1,13 @@
-﻿using SQLite;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dopamine.Data.Entities
 {
     public class AlbumArtwork
     {
-        [PrimaryKey(), AutoIncrement()]
+        //TODO:
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long AlbumArtworkID { get; set; }
 
         public string AlbumKey { get; set; }

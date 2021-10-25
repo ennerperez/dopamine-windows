@@ -1,10 +1,13 @@
-﻿using SQLite;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dopamine.Data.Entities
 {
     public class TrackStatistic
     {
-        [PrimaryKey(), AutoIncrement()]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long TrackStatisticID { get; set; }
 
         public string Path { get; set; }

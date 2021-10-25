@@ -50,10 +50,11 @@ namespace Dopamine.Core.Helpers
         {
             this.changeNotificationTimer.Stop();
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
+            //TODO: Dispatcher
+            // Application.Current.Dispatcher.Invoke(() =>
+            // {
                 this.FolderChanged(this, new EventArgs());
-            });
+            //});
         }
 
         public void Suspend()

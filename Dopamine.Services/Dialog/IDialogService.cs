@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Avalonia.Controls;
 
 namespace Dopamine.Services.Dialog
 {

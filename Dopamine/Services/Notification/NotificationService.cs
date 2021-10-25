@@ -7,19 +7,19 @@ using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows;
-using Windows.Media;
-using Windows.Media.Playback;
-using Windows.Storage.Streams;
+// using Windows.Media;
+// using Windows.Media.Playback;
+// using Windows.Storage.Streams;
 
 namespace Dopamine.Services.Notification
 {
     public class NotificationService : LegacyNotificationService
     {
         private bool systemNotificationIsEnabled;
-        private SystemMediaTransportControls systemMediaControls;
-        private SystemMediaTransportControlsDisplayUpdater displayUpdater;
-        private MusicDisplayProperties musicProperties;
-        private InMemoryRandomAccessStream artworkStream;
+        // private SystemMediaTransportControls systemMediaControls;
+        // private SystemMediaTransportControlsDisplayUpdater displayUpdater;
+        // private MusicDisplayProperties musicProperties;
+        // private InMemoryRandomAccessStream artworkStream;
 
         public override bool SupportsSystemNotification => true;
 
@@ -39,73 +39,73 @@ namespace Dopamine.Services.Notification
             // Pay attention to UPPERCASE property
             this.SystemNotificationIsEnabled = SettingsClient.Get<bool>("Behaviour", "EnableSystemNotification");
 
-            systemMediaControls = BackgroundMediaPlayer.Current.SystemMediaTransportControls;
-            BackgroundMediaPlayer.Current.IsLoopingEnabled = true;
-            displayUpdater = systemMediaControls.DisplayUpdater;
-            displayUpdater.Type = MediaPlaybackType.Music;
-            musicProperties = displayUpdater.MusicProperties;
-            systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Closed;
-            displayUpdater.Update();
+            // systemMediaControls = BackgroundMediaPlayer.Current.SystemMediaTransportControls;
+            // BackgroundMediaPlayer.Current.IsLoopingEnabled = true;
+            // displayUpdater = systemMediaControls.DisplayUpdater;
+            // displayUpdater.Type = MediaPlaybackType.Music;
+            // musicProperties = displayUpdater.MusicProperties;
+            // systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Closed;
+            // displayUpdater.Update();
         }
 
-        private async void SMCButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemMediaTransportControlsButton.Previous:
-                    await this.PlaybackService.PlayPreviousAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Next:
-                    await this.PlaybackService.PlayNextAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Pause:
-                    await this.PlaybackService.PlayOrPauseAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Play:
-                    await this.PlaybackService.PlayOrPauseAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Stop:
-                    this.PlaybackService.Stop();
-                    break;
-                default:
-                    // Never happens		
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        // private async void SMCButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs e)
+        // {
+        //     switch (e.Button)
+        //     {
+        //         case SystemMediaTransportControlsButton.Previous:
+        //             await this.PlaybackService.PlayPreviousAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Next:
+        //             await this.PlaybackService.PlayNextAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Pause:
+        //             await this.PlaybackService.PlayOrPauseAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Play:
+        //             await this.PlaybackService.PlayOrPauseAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Stop:
+        //             this.PlaybackService.Stop();
+        //             break;
+        //         default:
+        //             // Never happens		
+        //             throw new ArgumentOutOfRangeException();
+        //     }
+        // }
+        //
+        // private void SMCAutoRepeatModeChanged(SystemMediaTransportControls sender, AutoRepeatModeChangeRequestedEventArgs args)
+        // {
+        //     switch (args.RequestedAutoRepeatMode)
+        //     {
+        //         case MediaPlaybackAutoRepeatMode.List:
+        //             this.PlaybackService.LoopMode = LoopMode.All;
+        //             break;
+        //         case MediaPlaybackAutoRepeatMode.Track:
+        //             this.PlaybackService.LoopMode = LoopMode.One;
+        //             break;
+        //         case MediaPlaybackAutoRepeatMode.None:
+        //             this.PlaybackService.LoopMode = LoopMode.None;
+        //             break;
+        //     }
+        // }
 
-        private void SMCAutoRepeatModeChanged(SystemMediaTransportControls sender, AutoRepeatModeChangeRequestedEventArgs args)
-        {
-            switch (args.RequestedAutoRepeatMode)
-            {
-                case MediaPlaybackAutoRepeatMode.List:
-                    this.PlaybackService.LoopMode = LoopMode.All;
-                    break;
-                case MediaPlaybackAutoRepeatMode.Track:
-                    this.PlaybackService.LoopMode = LoopMode.One;
-                    break;
-                case MediaPlaybackAutoRepeatMode.None:
-                    this.PlaybackService.LoopMode = LoopMode.None;
-                    break;
-            }
-        }
-
-        private async void SMCShuffleEnabledChanged(SystemMediaTransportControls sender, ShuffleEnabledChangeRequestedEventArgs args)
-        {
-            await this.PlaybackService.SetShuffleAsync(args.RequestedShuffleEnabled);
-        }
-
-        private void SMCPlaybackPositionChanged(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
-        {
-            if (args.RequestedPlaybackPosition.Duration() <= this.PlaybackService.GetTotalTime &&
-                args.RequestedPlaybackPosition.Duration().TotalSeconds >= 0)
-            {
-                if (!this.PlaybackService.IsStopped)
-                {
-                    this.PlaybackService.Progress = args.RequestedPlaybackPosition.Duration().TotalSeconds / this.PlaybackService.GetTotalTime.TotalSeconds;
-                    UpdateSMCPosition();
-                }
-            }
-        }
+        // private async void SMCShuffleEnabledChanged(SystemMediaTransportControls sender, ShuffleEnabledChangeRequestedEventArgs args)
+        // {
+        //     await this.PlaybackService.SetShuffleAsync(args.RequestedShuffleEnabled);
+        // }
+        //
+        // private void SMCPlaybackPositionChanged(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
+        // {
+        //     if (args.RequestedPlaybackPosition.Duration() <= this.PlaybackService.GetTotalTime &&
+        //         args.RequestedPlaybackPosition.Duration().TotalSeconds >= 0)
+        //     {
+        //         if (!this.PlaybackService.IsStopped)
+        //         {
+        //             this.PlaybackService.Progress = args.RequestedPlaybackPosition.Duration().TotalSeconds / this.PlaybackService.GetTotalTime.TotalSeconds;
+        //             UpdateSMCPosition();
+        //         }
+        //     }
+        // }
 
         protected override bool CanShowNotification()
         {
@@ -115,34 +115,34 @@ namespace Dopamine.Services.Notification
 
         private void PlaybackStoppedHandler(object sender, EventArgs e)
         {
-            systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
+            // systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
             UpdateSMCPosition();
-            displayUpdater.Update();
+            // displayUpdater.Update();
         }
 
         private void PlaybackResumedSystemNotificationHandler(object _, EventArgs __)
         {
-            systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Playing;
-            displayUpdater.Update();
+            // systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+            // displayUpdater.Update();
         }
 
         private void PlaybackPausedSystemNotificationHandler(object _, EventArgs __)
         {
-            systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Paused;
-            displayUpdater.Update();
+            // systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Paused;
+            // displayUpdater.Update();
         }
 
         private async void PlaybackSuccessSystemNotificationHandler(object sender, PlaybackSuccessEventArgs e)
         {
-            systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+            // systemMediaControls.PlaybackStatus = MediaPlaybackStatus.Playing;
             var track = this.PlaybackService.CurrentTrack;
-            musicProperties.AlbumTitle = track.AlbumTitle;
-            musicProperties.Artist = track.ArtistName;
-            musicProperties.Title = track.TrackTitle;
+            // musicProperties.AlbumTitle = track.AlbumTitle;
+            // musicProperties.Artist = track.ArtistName;
+            // musicProperties.Title = track.TrackTitle;
             uint.TryParse(track.TrackNumber, out var trackNumber);
-            musicProperties.TrackNumber = trackNumber;
+            // musicProperties.TrackNumber = trackNumber;
             await SetArtworkThumbnailAsync(await this.MetadataService.GetArtworkAsync(track.Path));
-            displayUpdater.Update();
+            // displayUpdater.Update();
         }
 
         private void PlaybackLoopChangedHandler(object sender, EventArgs e)
@@ -152,7 +152,7 @@ namespace Dopamine.Services.Notification
 
         private void PlaybackShuffleChangedHandler(object sender, EventArgs e)
         {
-            systemMediaControls.ShuffleEnabled = this.PlaybackService.Shuffle;
+            // systemMediaControls.ShuffleEnabled = this.PlaybackService.Shuffle;
         }
 
         private void PlaybackProgressChangedHandler(object sender, EventArgs e)
@@ -181,24 +181,24 @@ namespace Dopamine.Services.Notification
                 {
                     if (Constants.IsWindows10)
                     {
-                        systemMediaControls.IsEnabled = true;
-                        systemMediaControls.IsPlayEnabled = true;
-                        systemMediaControls.IsPauseEnabled = true;
-                        systemMediaControls.IsPreviousEnabled = true;
-                        systemMediaControls.IsNextEnabled = true;
-                        systemMediaControls.ShuffleEnabled = this.PlaybackService.Shuffle;
-                        systemMediaControls.IsRewindEnabled = false;
-                        systemMediaControls.IsFastForwardEnabled = false;
-                        systemMediaControls.IsRecordEnabled = false;
-                        systemMediaControls.IsStopEnabled = true;
+                        // systemMediaControls.IsEnabled = true;
+                        // systemMediaControls.IsPlayEnabled = true;
+                        // systemMediaControls.IsPauseEnabled = true;
+                        // systemMediaControls.IsPreviousEnabled = true;
+                        // systemMediaControls.IsNextEnabled = true;
+                        // systemMediaControls.ShuffleEnabled = this.PlaybackService.Shuffle;
+                        // systemMediaControls.IsRewindEnabled = false;
+                        // systemMediaControls.IsFastForwardEnabled = false;
+                        // systemMediaControls.IsRecordEnabled = false;
+                        // systemMediaControls.IsStopEnabled = true;
 
                         UpdateSMCRepeatMode();
                         UpdateSMCPosition();
 
-                        systemMediaControls.ButtonPressed += SMCButtonPressed;
-                        systemMediaControls.AutoRepeatModeChangeRequested += SMCAutoRepeatModeChanged;
-                        systemMediaControls.ShuffleEnabledChangeRequested += SMCShuffleEnabledChanged;
-                        systemMediaControls.PlaybackPositionChangeRequested += SMCPlaybackPositionChanged;
+                        // systemMediaControls.ButtonPressed += SMCButtonPressed;
+                        // systemMediaControls.AutoRepeatModeChangeRequested += SMCAutoRepeatModeChanged;
+                        // systemMediaControls.ShuffleEnabledChangeRequested += SMCShuffleEnabledChanged;
+                        // systemMediaControls.PlaybackPositionChangeRequested += SMCPlaybackPositionChanged;
 
                         this.PlaybackService.PlaybackSuccess += this.PlaybackSuccessSystemNotificationHandler;
                         this.PlaybackService.PlaybackPaused += this.PlaybackPausedSystemNotificationHandler;
@@ -221,11 +221,11 @@ namespace Dopamine.Services.Notification
 
                     if (Constants.IsWindows10)
                     {
-                        systemMediaControls.IsEnabled = false;
-                        systemMediaControls.ButtonPressed -= SMCButtonPressed;
-                        systemMediaControls.AutoRepeatModeChangeRequested -= SMCAutoRepeatModeChanged;
-                        systemMediaControls.ShuffleEnabledChangeRequested -= SMCShuffleEnabledChanged;
-                        systemMediaControls.PlaybackPositionChangeRequested -= SMCPlaybackPositionChanged;
+                        // systemMediaControls.IsEnabled = false;
+                        // systemMediaControls.ButtonPressed -= SMCButtonPressed;
+                        // systemMediaControls.AutoRepeatModeChangeRequested -= SMCAutoRepeatModeChanged;
+                        // systemMediaControls.ShuffleEnabledChangeRequested -= SMCShuffleEnabledChanged;
+                        // systemMediaControls.PlaybackPositionChangeRequested -= SMCPlaybackPositionChanged;
 
                         this.PlaybackService.PlaybackSuccess -= this.PlaybackSuccessSystemNotificationHandler;
                         this.PlaybackService.PlaybackPaused -= this.PlaybackPausedSystemNotificationHandler;
@@ -241,17 +241,17 @@ namespace Dopamine.Services.Notification
 
         private async Task SetArtworkThumbnailAsync(byte[] data)
         {
-            artworkStream?.Dispose();
+            // artworkStream?.Dispose();
             if (data == null)
             {
-                artworkStream = null;
-                displayUpdater.Thumbnail = null;
+                // artworkStream = null;
+                // displayUpdater.Thumbnail = null;
             }
             else
             {
-                artworkStream = new InMemoryRandomAccessStream();
-                await artworkStream.WriteAsync(data.AsBuffer());
-                displayUpdater.Thumbnail = RandomAccessStreamReference.CreateFromStream(artworkStream);
+                // artworkStream = new InMemoryRandomAccessStream();
+                // await artworkStream.WriteAsync(data.AsBuffer());
+                // displayUpdater.Thumbnail = RandomAccessStreamReference.CreateFromStream(artworkStream);
             }
         }
 
@@ -260,30 +260,30 @@ namespace Dopamine.Services.Notification
             switch (this.PlaybackService.LoopMode)
             {
                 case LoopMode.All:
-                    systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.List;
+                    // systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.List;
                     break;
                 case LoopMode.One:
-                    systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.Track;
+                    // systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.Track;
                     break;
                 case LoopMode.None:
-                    systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.None;
+                    // systemMediaControls.AutoRepeatMode = MediaPlaybackAutoRepeatMode.None;
                     break;
             }
 
-            displayUpdater.Update();
+            // displayUpdater.Update();
         }
 
         private void UpdateSMCPosition()
         {
-            var timelineProperties = new SystemMediaTransportControlsTimelineProperties();
+            // var timelineProperties = new SystemMediaTransportControlsTimelineProperties();
 
-            timelineProperties.StartTime = TimeSpan.FromSeconds(0);
-            timelineProperties.MinSeekTime = TimeSpan.FromSeconds(0);
-            timelineProperties.Position = this.PlaybackService.GetCurrentTime;
-            timelineProperties.MaxSeekTime = this.PlaybackService.GetTotalTime;
-            timelineProperties.EndTime = this.PlaybackService.GetTotalTime;
-
-            systemMediaControls.UpdateTimelineProperties(timelineProperties);
+            // timelineProperties.StartTime = TimeSpan.FromSeconds(0);
+            // timelineProperties.MinSeekTime = TimeSpan.FromSeconds(0);
+            // timelineProperties.Position = this.PlaybackService.GetCurrentTime;
+            // timelineProperties.MaxSeekTime = this.PlaybackService.GetTotalTime;
+            // timelineProperties.EndTime = this.PlaybackService.GetTotalTime;
+            //
+            // systemMediaControls.UpdateTimelineProperties(timelineProperties);
         }
     }
 }

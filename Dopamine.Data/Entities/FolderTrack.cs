@@ -1,10 +1,12 @@
-﻿using SQLite;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dopamine.Data.Entities
 {
     public class FolderTrack
     {
-        [PrimaryKey(), AutoIncrement()]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long FolderTrackID { get; set; }
 
         public long FolderID { get; set; }

@@ -1,7 +1,6 @@
 ﻿using CSCore;
 using CSCore.CoreAudioAPI;
 using CSCore.DSP;
-using CSCore.Ffmpeg;
 using CSCore.MediaFoundation;
 using CSCore.SoundOut;
 using CSCore.Streams;
@@ -74,6 +73,7 @@ namespace Dopamine.Core.Audio
                 {
                     instance = new CSCorePlayer();
                 }
+
                 return instance;
             }
         }
@@ -316,7 +316,7 @@ namespace Dopamine.Core.Audio
                 // See: https://github.com/digimezzo/Dopamine/issues/746
                 // And: https://github.com/filoe/cscore/issues/344
                 this.audioStream = File.OpenRead(filename);
-                waveSource = new FfmpegDecoder(this.audioStream);
+                waveSource = new MediaFoundationDecoder(this.audioStream); //TODO: FfmpegDecoder
             }
 
             // If the SampleRate < 32000, make it 32000. The Equalizer's maximum frequency is 16000Hz.
@@ -363,7 +363,6 @@ namespace Dopamine.Core.Audio
                 {
                     this.currentTimeBeforePause = this.soundOut.WaveSource.GetPosition();
                     this.totalTimeBeforePause = this.soundOut.WaveSource.GetLength();
-
                 }
             }
             catch (Exception)
@@ -518,6 +517,7 @@ namespace Dopamine.Core.Audio
             {
                 equalizer.SampleFilters.Add(new EqualizerFilter(channels, equalizerChannelFilter));
             }
+
             return equalizer;
         }
 
@@ -562,6 +562,7 @@ namespace Dopamine.Core.Audio
                         if (this.player.notificationSource != null) this.player.notificationSource.SingleBlockRead += InputStream_LeftSample;
                         inputStreamList.Add(InputStream_LeftSample);
                     }
+
                     if (channel == SpectrumChannel.Right)
                     {
                         if (this.player.notificationSource != null) this.player.notificationSource.SingleBlockRead += InputStream_RightSample;
@@ -627,6 +628,7 @@ namespace Dopamine.Core.Audio
                     {
                         maxFrequency = 22050;
                     }
+
                     // Assume a default 44.1 kHz sample rate.
                     return Convert.ToInt32((frequency / maxFrequency) * ((int)this.fftProvider.FftSize / 2));
                 }

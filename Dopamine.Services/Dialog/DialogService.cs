@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 namespace Dopamine.Services.Dialog
 {
+    
     public class DialogService : IDialogService
     {
         private List<Windows10BorderlessWindow> openDialogs;

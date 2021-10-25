@@ -8,7 +8,7 @@ using Dopamine.Services.Playback;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Windows.Media;
+// using Windows.Media;
 
 namespace Dopamine.Services.Notification
 {
@@ -145,28 +145,28 @@ namespace Dopamine.Services.Notification
             }
         }
 
-        private async void SMCButtonPressed(SystemMediaTransportControls sender,
-            SystemMediaTransportControlsButtonPressedEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemMediaTransportControlsButton.Previous:
-                    await this.playbackService.PlayPreviousAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Next:
-                    await this.playbackService.PlayNextAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Pause:
-                    await this.playbackService.PlayOrPauseAsync();
-                    break;
-                case SystemMediaTransportControlsButton.Play:
-                    await this.playbackService.PlayOrPauseAsync();
-                    break;
-                default:
-                    // Never happens
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        // private async void SMCButtonPressed(SystemMediaTransportControls sender,
+        //     SystemMediaTransportControlsButtonPressedEventArgs e)
+        // {
+        //     switch (e.Button)
+        //     {
+        //         case SystemMediaTransportControlsButton.Previous:
+        //             await this.playbackService.PlayPreviousAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Next:
+        //             await this.playbackService.PlayNextAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Pause:
+        //             await this.playbackService.PlayOrPauseAsync();
+        //             break;
+        //         case SystemMediaTransportControlsButton.Play:
+        //             await this.playbackService.PlayOrPauseAsync();
+        //             break;
+        //         default:
+        //             // Never happens
+        //             throw new ArgumentOutOfRangeException();
+        //     }
+        // }
        
         public async Task ShowNotificationAsync()
         {
