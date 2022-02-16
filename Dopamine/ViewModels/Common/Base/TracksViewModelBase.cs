@@ -7,6 +7,7 @@ using Dopamine.Core.Prism;
 using Dopamine.Data;
 using Dopamine.Data.Entities;
 using Dopamine.Data.Repositories;
+using Dopamine.Services.Blacklist;
 using Dopamine.Services.Collection;
 using Dopamine.Services.Dialog;
 using Dopamine.Services.Entities;
@@ -39,6 +40,7 @@ namespace Dopamine.ViewModels.Common.Base
         private ITrackRepository trackRepository;
         private ISearchService searchService;
         private IPlaybackService playbackService;
+        private IBlacklistService blacklistService;
         private ICollectionService collectionService;
         private II18nService i18nService;
         private IEventAggregator eventAggregator;
@@ -79,6 +81,7 @@ namespace Dopamine.ViewModels.Common.Base
             this.dialogService = container.Resolve<IDialogService>();
             this.searchService = container.Resolve<ISearchService>();
             this.playbackService = container.Resolve<IPlaybackService>();
+            this.blacklistService = container.Resolve<IBlacklistService>();
             this.collectionService = container.Resolve<ICollectionService>();
             this.i18nService = container.Resolve<II18nService>();
             this.eventAggregator = container.Resolve<IEventAggregator>();
@@ -507,6 +510,22 @@ namespace Dopamine.ViewModels.Common.Base
                     }
                 }
             });
+        }
+
+        protected async override Task AddToBlacklistAsync()
+        {
+            // Don't try to add to the blacklist when nothing is selected
+            if (this.SelectedTracks == null || this.SelectedTracks.Count == 0) return;
+
+            try
+            {
+                await this.blacklistService.AddToBlacklistAsync(this.SelectedTracks);
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("An error occurred while adding tracks to blacklist. Exception: {0}", ex.Message);
+                this.dialogService.ShowNotification(0xe711, 16, ResourceUtils.GetString("Language_Error"), ResourceUtils.GetString("Language_Error_Adding_To_Blacklist"), ResourceUtils.GetString("Language_Ok"), true, ResourceUtils.GetString("Language_Log_File"));
+            }
         }
 
         protected override void ShowSelectedTrackInformation()

@@ -1,5 +1,4 @@
 ﻿using Dopamine.Data;
-using Dopamine.Data.Entities;
 using Dopamine.Services.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,5 +25,6 @@ namespace Dopamine.Services.Collection
         Task<IList<AlbumViewModel>> OrderAlbumsAsync(IList<AlbumViewModel> albums, AlbumOrder albumOrder);
 
         event EventHandler CollectionChanged;
+       
     }
 }

@@ -9,6 +9,8 @@ using Dopamine.Data;
 using Dopamine.Data.Entities;
 using Dopamine.Data.Metadata;
 using Dopamine.Data.Repositories;
+using Dopamine.Services.Blacklist;
+using Dopamine.Services.Collection;
 using Dopamine.Services.Entities;
 using Dopamine.Services.Equalizer;
 using Dopamine.Services.Extensions;
@@ -56,6 +58,7 @@ namespace Dopamine.Services.Playback
         private bool isEqualizerEnabled;
 
         private IQueuedTrackRepository queuedTrackRepository;
+        private IBlacklistService blacklistService;
         private System.Timers.Timer saveQueuedTracksTimer = new System.Timers.Timer();
         private int saveQueuedTracksTimeoutSeconds = 5;
 
@@ -273,13 +276,14 @@ namespace Dopamine.Services.Playback
             get { return this.player; }
         }
 
-        public PlaybackService(IFileService fileService, II18nService i18nService, ITrackRepository trackRepository,
+        public PlaybackService(IFileService fileService, II18nService i18nService, ITrackRepository trackRepository, IBlacklistService blacklistService,
             IEqualizerService equalizerService, IQueuedTrackRepository queuedTrackRepository, IContainerProvider container, IPlaylistService playlistService)
         {
             this.fileService = fileService;
             this.i18nService = i18nService;
             this.trackRepository = trackRepository;
             this.queuedTrackRepository = queuedTrackRepository;
+            this.blacklistService = blacklistService;
             this.equalizerService = equalizerService;
             this.playlistService = playlistService;
             this.container = container;
@@ -1035,7 +1039,15 @@ namespace Dopamine.Services.Playback
         {
             if (this.Queue.Count > 0)
             {
-                await this.TryPlayAsync(this.queueManager.FirstTrack());
+                TrackViewModel firstTrack = this.queueManager.FirstTrack();
+
+                if (await this.blacklistService.IsInBlacklistAsync(firstTrack))
+                {
+                    await this.TryPlayNextAsync(false);
+                }
+                else { 
+                    await this.TryPlayAsync(firstTrack);
+                }
             }
         }
 
@@ -1196,24 +1208,61 @@ namespace Dopamine.Services.Playback
             return await this.TryPlayAsync(previousTrack);
         }
 
-        private async Task<bool> TryPlayNextAsync(bool ignoreLoopOne)
+        private async Task<bool> TryPlayNextAsync(bool userHasRequestedNextTrack)
         {
             this.isPlayingPreviousTrack = false;
 
-            LoopMode loopMode = this.LoopMode == LoopMode.One && ignoreLoopOne ? LoopMode.All : this.LoopMode;
+            LoopMode loopMode = this.LoopMode == LoopMode.One && userHasRequestedNextTrack ? LoopMode.All : this.LoopMode;
 
-            // When "loop one" is enabled and ignoreLoopOne is true, act like "loop all".
+            // When "loop one" is enabled and userHasRequestedNextTrack is true, act like "loop all".
             bool returnToStart = SettingsClient.Get<bool>("Playback", "LoopWhenShuffle") & this.shuffle;
-            TrackViewModel nextTrack = await this.queueManager.NextTrackAsync(loopMode, returnToStart);
 
-            if (nextTrack == null)
+            TrackViewModel nextTrack = null;
+
+            if (userHasRequestedNextTrack)
             {
-                this.Stop();
-                return true;
+                nextTrack = await this.queueManager.NextTrackAsync(loopMode, returnToStart);
+
+                if (nextTrack == null)
+                {
+                    this.Stop();
+                    return true;
+                }
+            }
+            else
+            {
+                bool shouldGetNextTrack = true;
+                int numberOfSkips = 0;
+
+                while (shouldGetNextTrack)
+                {
+                    if (numberOfSkips > this.queueManager.Queue.Count)
+                    {
+                        this.Stop();
+                        return true;
+                    }
+
+                    numberOfSkips++;
+                    nextTrack = await this.queueManager.NextTrackAsync(loopMode, returnToStart);
+
+                    if (nextTrack == null)
+                    {
+                        this.Stop();
+                        return true;
+                    }
+
+                    shouldGetNextTrack = await this.blacklistService.IsInBlacklistAsync(nextTrack);
+
+                    if (shouldGetNextTrack)
+                    {
+                        this.queueManager.SetCurrentTrack(nextTrack.Path);
+                    }
+                }
             }
 
             return await this.TryPlayAsync(nextTrack);
         }
+
 
         private void ProgressTimeoutHandler(object sender, ElapsedEventArgs e)
         {
