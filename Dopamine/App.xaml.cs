@@ -10,6 +10,7 @@ using Dopamine.Core.IO;
 using Dopamine.Data;
 using Dopamine.Data.Repositories;
 using Dopamine.Services.Appearance;
+using Dopamine.Services.Blacklist;
 using Dopamine.Services.Cache;
 using Dopamine.Services.Collection;
 using Dopamine.Services.Command;
@@ -222,6 +223,7 @@ namespace Dopamine
                 containerRegistry.RegisterSingleton<ITrackRepository, TrackRepository>();
                 containerRegistry.RegisterSingleton<IAlbumArtworkRepository, AlbumArtworkRepository>();
                 containerRegistry.RegisterSingleton<IQueuedTrackRepository, QueuedTrackRepository>();
+                containerRegistry.RegisterSingleton<IBlacklistTrackRepository, BlacklistTrackRepository>();
             }
 
             void RegisterServices()
@@ -254,6 +256,7 @@ namespace Dopamine
                 containerRegistry.RegisterSingleton<ILifetimeService, LifetimeService>();
                 containerRegistry.RegisterSingleton<IInfoDownloadService, InfoDownloadService>();
                 containerRegistry.RegisterSingleton<IRichPresenceService, RichPresenceService>();
+                containerRegistry.RegisterSingleton<IBlacklistService, BlacklistService>();
 
                 INotificationService notificationService;
 
@@ -336,6 +339,7 @@ namespace Dopamine
                 containerRegistry.Register<object, SettingsOnline>(typeof(SettingsOnline).FullName);
                 containerRegistry.Register<object, SettingsPlayback>(typeof(SettingsPlayback).FullName);
                 containerRegistry.Register<object, SettingsStartup>(typeof(SettingsStartup).FullName);
+                containerRegistry.Register<object, SettingsBlacklist>(typeof(SettingsBlacklist).FullName);
 
                 // Information
                 containerRegistry.Register<object, InformationMenu>(typeof(InformationMenu).FullName);

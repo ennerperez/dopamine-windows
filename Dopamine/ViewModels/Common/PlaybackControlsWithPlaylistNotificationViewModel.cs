@@ -1,4 +1,5 @@
 ﻿using Digimezzo.Foundation.Core.Utils;
+using Dopamine.Services.Blacklist;
 using Dopamine.Services.Collection;
 using Dopamine.Services.Playback;
 using Dopamine.Services.Playlist;
@@ -11,9 +12,9 @@ namespace Dopamine.ViewModels.Common
 {
     public class PlaybackControlsWithPlaylistNotificationViewModel : BindableBase
     {
-        private ICollectionService collectionService;
         private IPlaybackService playbackService;
         private IPlaylistService playlistService;
+        private IBlacklistService blacklistService;
         private string addedTracksToPlaylistText;
         private bool showAddedTracksToPlaylistText;
         private Timer showAddedTracksToPlaylistTextTimer;
@@ -42,11 +43,11 @@ namespace Dopamine.ViewModels.Common
             }
         }
       
-        public PlaybackControlsWithPlaylistNotificationViewModel(ICollectionService collectionService, IPlaybackService playbackService,IPlaylistService playlistService)
+        public PlaybackControlsWithPlaylistNotificationViewModel(IPlaybackService playbackService, IPlaylistService playlistService, IBlacklistService blacklistService)
         {
-            this.collectionService = collectionService;
             this.playbackService = playbackService;
             this.playlistService = playlistService;
+            this.blacklistService = blacklistService;
 
             this.PlaylistNotificationMouseEnterCommand = new DelegateCommand(() => this.HideText());
 
@@ -74,6 +75,20 @@ namespace Dopamine.ViewModels.Common
                 }
 
                 this.AddedTracksToPlaylistText = text.Replace("{numberoftracks}", iNumberOfTracks.ToString());
+
+                this.ShowAddedTracksToPlaylistText = true;
+            };
+
+            this.blacklistService.AddedTracksToBacklist += numberOfTracks =>
+            {
+                string text = ResourceUtils.GetString("Language_Added_Track_To_Blacklist");
+
+                if (numberOfTracks > 1)
+                {
+                    text = ResourceUtils.GetString("Language_Added_Tracks_To_Blacklist");
+                }
+
+                this.AddedTracksToPlaylistText = text.Replace("{numberoftracks}", numberOfTracks.ToString());
 
                 this.ShowAddedTracksToPlaylistText = true;
             };
