@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9EA6B1B-4B7E-4194-B858-24C4D70D9471}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dopamine.Packager", "Dopamine.Packager\Dopamine.Packager.csproj", "{F32533FD-96B4-4B94-8844-3EFA1F63F52A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dopamine.Tests", "Dopamine.Tests\Dopamine.Tests.csproj", "{5C9DE16E-C69A-4182-9C0C-30FF7CC944CD}"
@@ -16,10 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dopamine.Core", "Dopamine.Core\Dopamine.Core.csproj", "{7FAAC843-6AA9-4B5B-8678-937137A61E47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dopamine.Services", "Dopamine.Services\Dopamine.Services.csproj", "{C7C13D3A-BEF1-4825-9C60-14AAEC9714B3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphetamine.Core", "Amphetamine.Core\Amphetamine.Core.csproj", "{7E4AE2FF-9B7F-486A-8021-84786CA56197}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphetamine.Data", "Amphetamine.Data\Amphetamine.Data.csproj", "{26DEE124-E625-4895-A672-8C92AEA09AD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,38 +123,6 @@ Global
 		{C7C13D3A-BEF1-4825-9C60-14AAEC9714B3}.Release|x64.Build.0 = Release|Any CPU
 		{C7C13D3A-BEF1-4825-9C60-14AAEC9714B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{C7C13D3A-BEF1-4825-9C60-14AAEC9714B3}.Release|x86.Build.0 = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|ARM.Build.0 = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|x64.Build.0 = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Debug|x86.Build.0 = Debug|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|ARM.ActiveCfg = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|ARM.Build.0 = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|x64.ActiveCfg = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|x64.Build.0 = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|x86.ActiveCfg = Release|Any CPU
-		{7E4AE2FF-9B7F-486A-8021-84786CA56197}.Release|x86.Build.0 = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|ARM.Build.0 = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|x64.Build.0 = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|x86.Build.0 = Debug|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|ARM.ActiveCfg = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|ARM.Build.0 = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|x64.ActiveCfg = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|x64.Build.0 = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|x86.ActiveCfg = Release|Any CPU
-		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

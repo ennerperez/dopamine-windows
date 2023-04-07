@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{B9EA6B1B-4B7E-4194-B858-24C4D70D9471}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{CC0BCDCB-9290-4F32-A876-E4E3FF792F45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", ".build\_build.csproj", "{66BB9314-B94B-44E8-8D3E-184CD89FBEF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{A25C6C86-5DC4-408C-B40D-3CC8F0BB6E3E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		build.cmd = build.cmd
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".imports", ".imports", "{B75A9686-7E2B-472B-B45E-DCC7167022C4}"
+	ProjectSection(SolutionItems) = preProject
+		src\.imports\AssemblyInfo.props = src\.imports\AssemblyInfo.props
+		src\.imports\Features.props = src\.imports\Features.props
+		src\.imports\Features.targets = src\.imports\Features.targets
+		src\.imports\Project.props = src\.imports\Project.props
+		src\.imports\Project.targets = src\.imports\Project.targets
+		src\.imports\Template.props = src\.imports\Template.props
+		src\.imports\Template.targets = src\.imports\Template.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AB4B249C-40AC-4DF2-8C47-0DA691D6E3E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amphetamine.Data", "src\Amphetamine.Data\Amphetamine.Data.csproj", "{26DEE124-E625-4895-A672-8C92AEA09AD6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amphetamine.Core", "src\Amphetamine.Core\Amphetamine.Core.csproj", "{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amphetamine", "src\Amphetamine\Amphetamine.csproj", "{3D03D195-6AC9-46FF-91F3-F866CE65BBE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphetamine.Console", "src\Amphetamine.Console\Amphetamine.Console.csproj", "{E8B8AE95-52D3-4D06-AB7E-F465E48A269C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26DEE124-E625-4895-A672-8C92AEA09AD6} = {AB4B249C-40AC-4DF2-8C47-0DA691D6E3E3}
+		{66BB9314-B94B-44E8-8D3E-184CD89FBEF7} = {CC0BCDCB-9290-4F32-A876-E4E3FF792F45}
+		{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B} = {AB4B249C-40AC-4DF2-8C47-0DA691D6E3E3}
+		{3D03D195-6AC9-46FF-91F3-F866CE65BBE4} = {AB4B249C-40AC-4DF2-8C47-0DA691D6E3E3}
+		{E8B8AE95-52D3-4D06-AB7E-F465E48A269C} = {AB4B249C-40AC-4DF2-8C47-0DA691D6E3E3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEC48903-29B8-4CDB-9858-8882CF00B116}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66BB9314-B94B-44E8-8D3E-184CD89FBEF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66BB9314-B94B-44E8-8D3E-184CD89FBEF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D03D195-6AC9-46FF-91F3-F866CE65BBE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D03D195-6AC9-46FF-91F3-F866CE65BBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D03D195-6AC9-46FF-91F3-F866CE65BBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D03D195-6AC9-46FF-91F3-F866CE65BBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9EA277-0D62-4976-ABB7-C5A08B1AD23B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26DEE124-E625-4895-A672-8C92AEA09AD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B8AE95-52D3-4D06-AB7E-F465E48A269C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B8AE95-52D3-4D06-AB7E-F465E48A269C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B8AE95-52D3-4D06-AB7E-F465E48A269C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B8AE95-52D3-4D06-AB7E-F465E48A269C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
