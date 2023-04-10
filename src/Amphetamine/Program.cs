@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Prism.DryIoc;
+//using Prism.DryIoc;
 using Serilog;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -74,18 +74,18 @@ namespace Amphetamine
 
 				Logger.LogInformation("Application Starting");
 				var builder = CreateAppBuilder();
-				if (args.Contains("--fbdev"))
-				{
-					SilenceConsole();
-					return builder.StartLinuxFbDev(args, scaling: GetScaling());
-				}
-				else if (args.Contains("--drm"))
-				{
-					SilenceConsole();
-					return builder.StartLinuxDrm(args, scaling: GetScaling());
-				}
-				else
-					return builder.StartWithClassicDesktopLifetime(args);
+				// if (args.Contains("--fbdev"))
+				// {
+				// 	SilenceConsole();
+				// 	return builder.StartLinuxFbDev(args, scaling: GetScaling());
+				// }
+				// else if (args.Contains("--drm"))
+				// {
+				// 	SilenceConsole();
+				// 	return builder.StartLinuxDrm(args, scaling: GetScaling());
+				// }
+				// else
+				return builder.StartWithClassicDesktopLifetime(args);
 			}
 			catch (Exception ex)
 			{
@@ -132,6 +132,10 @@ namespace Amphetamine
 			var factory = Container.GetService<ILoggerFactory>();
 			if (factory != null)
 				Logger = factory.CreateLogger(typeof(Program));
+
+			var dbContext = Container.GetService<DbContext>();
+			if (dbContext != null)
+				dbContext.Initialize();
 		}
 		private static async void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
@@ -146,7 +150,7 @@ namespace Amphetamine
 				Console.WriteLine(ex.Message);
 				Console.ResetColor();
 			}
-			await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+			//await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
 		}
 
 		private static void SilenceConsole()
