@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceInclude Source="avares://Amphetamine/Resources/Styles/Animations.axaml" />
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/Buttons.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ColorSchemeButtons.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ContextMenu.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ContextMenuButton.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/DataGridTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/FontStyles.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/Geometries.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/HotKey.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/LinkButton.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxAlbums.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxArtists.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxBlacklistTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxFolders.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxFolderTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxGenres.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxNowPlayingTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxPlaylists.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxPlaylistTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxSemanticZoom.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxSimilarArtists.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxSmartPlaylistRules.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxSubfolderBreadCrumbs.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxSubfolders.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxTracks.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListHeaderComboBox.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/MetroCheckBox.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/MetroComboBox.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/MetroListBox.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/MetroTextBox.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/MenuPivot.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/SpectrumAnalyzer.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/Texts.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/Tooltip.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/WindowButton.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ScrollBar.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/PlaybackIndicator.axaml" /> -->
+		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/StackPanelConditionEnabled.axaml" /> -->
+	</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,173 @@
+{
+  "Configuration": {
+    "IsPortable": false
+  },
+  "General": {
+    "IsMiniPlayer": false,
+    "MiniPlayerType": 1,
+    "ShowOobe": true
+  },
+  "FullPlayer": {
+    "Width": 950,
+    "Height": 600,
+    "IsMaximized": false,
+    "Top": 50,
+    "Left": 50,
+    "SelectedPage": 0,
+    "SelectedCollectionPage": 0,
+    "SelectedNowPlayingSubPage": 0,
+    "IsNowPlayingSelected": false
+  },
+  "MiniPlayer": {
+    "Top": 50,
+    "Left": 50
+  },
+  "CoverSizes": {
+    "ArtistsCoverSize": 1,
+    "GenresCoverSize": 1,
+    "AlbumsCoverSize": 3
+  },
+  "Appearance": {
+    "EnableLightTheme": false,
+    "ColorScheme": "Blue",
+    "ShowWindowBorder": false,
+    "FollowWindowsColor": false,
+    "FollowAlbumCoverColor": false,
+    "Language": "EN",
+    "EnableTransparency": true
+  },
+  "Behaviour": {
+    "EnableRating": true,
+    "EnableLove": false,
+    "SaveRatingToAudioFiles": false,
+    "ShowTrayIcon": true,
+    "MinimizeToTray": false,
+    "CloseToTray": false,
+    "FollowTrack": true,
+    "EnableSystemNotification": false,
+    "ShowNotificationWhenPlaying": true,
+    "ShowNotificationWhenPausing": false,
+    "ShowNotificationWhenResuming": false,
+    "ShowNotificationControls": false,
+    "NotificationPosition": 3,
+    "NotificationAutoCloseSeconds": 4,
+    "ShowNotificationOnlyWhenPlayerNotVisible": true,
+    "MiniPlayerOnTop": false,
+    "MiniPlayerPositionLocked": false,
+    "CoverPlayerAlwaysShowPlaybackInfo": true,
+    "CoverPlayerAlignPlaylistVertically": false,
+    "ScrollVolumePercentage": 2,
+    "ShowRemoveFromDisk": false
+  },
+  "Startup": {
+    "ShowLastSelectedPage": true,
+    "RememberLastPlayedTrack": true
+  },
+  "Updates": {
+    "CheckAtStartup": true,
+    "CheckPeriodically": false,
+    "CheckForPrereleases": false,
+    "CheckIntervalMinutes": 15,
+    "AutomaticDownload": true
+  },
+  "Playback": {
+    "PreventSleepWhilePlaying": false,
+    "AudioDevice": null,
+    "AudioLatency": 200,
+    "WasapiEventMode": false,
+    "WasapiExclusiveMode": false,
+    "WasapiUseAllAvailableChannels": false,
+    "Volume": 0.5,
+    "Mute": false,
+    "LoopMode": 1,
+    "Shuffle": false,
+    "ShowProgressInTaskbar": true,
+    "ShowSpectrumAnalyzer": true,
+    "SpectrumStyle": 1,
+    "EnableExternalControl": false,
+    "LoopWhenShuffle": true
+  },
+  "Ordering": {
+    "ArtistsArtistType": 1,
+    "ArtistsTrackOrder": 2,
+    "AlbumsTrackOrder": 2,
+    "GenresTrackOrder": 2,
+    "ArtistsAlbumOrder": 1,
+    "AlbumsAlbumOrder": 1,
+    "GenresAlbumOrder": 1
+  },
+  "ColumnWidths": {
+    "ArtistsLeftPaneWidthPercent": 22,
+    "ArtistsRightPaneWidthPercent": 35,
+    "GenresLeftPaneWidthPercent": 22,
+    "GenresRightPaneWidthPercent": 35,
+    "AlbumsLeftPaneWidthPercent": 65,
+    "PlaylistsLeftPaneWidthPercent": 30,
+    "FoldersLeftPaneWidthPercent": 30
+  },
+  "TracksGrid": {
+    "VisibleColumns": [
+      "rating",
+      "artist",
+      "album",
+      "genre",
+      "length",
+      "albumartist",
+      "tracknumber",
+      "year"
+    ],
+    "SortColumn": null,
+    "SortDirection": null
+  },
+  "Indexing": {
+    "ShowAllFoldersInCollection": true,
+    "IgnoreRemovedFiles": true,
+    "RefreshCollectionAutomatically": true
+  },
+  "Equalizer": {
+    "IsEnabled": false,
+    "SelectedPreset": "Manual",
+    "ManualPreset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Lastfm": {
+    "Username": null,
+    "Password": null,
+    "Key": null,
+    "DownloadArtistInformation": true
+  },
+  "Discord": {
+    "EnableDiscordRichPresence": true
+  },
+  "Lyrics": {
+    "AutomaticScrolling": true,
+    "CenterLyrics": false,
+    "FontSize": 18,
+    "DownloadLyrics": true,
+    "TimeoutSeconds": 0,
+    "Providers": [
+      "lololyrics",
+      "lyricwikia",
+      "metrolyrics"
+    ]
+  },
+  "Covers": {
+    "DownloadMissingAlbumCovers": true
+  },
+  "Selections": {
+    "SelectedFolder": null
+  },
+  "MediaKeys": {
+    "UseAppCommandMediaKeys": false
+  }
+}

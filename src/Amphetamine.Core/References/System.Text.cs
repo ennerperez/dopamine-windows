@@ -79,5 +79,11 @@ namespace System.Text
 
 			return @this;
 		}
+
+		public static bool IsNumeric(this string str)
+		{
+			float output;
+			return float.TryParse(str, out output);
+		}
 	}
 }

@@ -50,17 +50,15 @@ namespace Amphetamine.Data.Contexts
 			optionsBuilder?.EnableDetailedErrors();
 			optionsBuilder?.EnableSensitiveDataLogging();
 
-			var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var directory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "..", "..", "..");
 			var configuration = new ConfigurationBuilder()
 				.SetBasePath(directory)
 				.AddJsonFile("appsettings.json", false, true)
-#if DEBUG
 				.AddJsonFile("appsettings.Development.json", true, true)
-#endif
 				.AddEnvironmentVariables()
 				.Build();
 
-			optionsBuilder?.UseDbEngine(configuration, nameof(DefaultContext),  DatabaseProviders.Sqlite);
+			optionsBuilder?.UseDbEngine(configuration, nameof(DefaultContext), DatabaseProviders.Sqlite);
 		}
 #endif
 

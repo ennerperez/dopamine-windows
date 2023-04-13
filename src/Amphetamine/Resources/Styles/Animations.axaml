@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<!-- Add Controls for Previewer Here -->
+			<Panel Width="640" Height="480">
+				<TextBlock Text="Welcome to Avalonia!" Foreground="Wheat" />
+			</Panel>
+		</Border>
+	</Design.PreviewWith>
+
+	<!-- Add Styles Here -->
+	<Style x:Key="SubMenuSlideInAnimation" Selector="Panel">
+		<Setter Property="IsVisible" Value="True" />
+		<Setter Property="Margin" Value="-10,0,0,0"></Setter>
+		<Setter Property="Opacity" Value="0.0"></Setter>
+	</Style>
+	<!-- <Style Selector=":is(Panel):pointerover"> -->
+	<!-- 	<Style.Animations> -->
+	<!-- 		<Animation Duration="0:0:0:5"> -->
+	<!-- 			<KeyFrame Cue="0%"> -->
+	<!-- 				<Setter Property="Margin" Value="0,0,0,0"></Setter> -->
+	<!-- 			</KeyFrame> -->
+	<!-- 		</Animation> -->
+	<!-- 		<Animation Duration="0:0:0:1"> -->
+	<!-- 			<KeyFrame Cue="100%"> -->
+	<!-- 				<Setter Property="Opacity" Value="1.0"></Setter> -->
+	<!-- 			</KeyFrame> -->
+	<!-- 		</Animation> -->
+	<!-- 	</Style.Animations> -->
+	<!-- </Style> -->
+</ResourceDictionary>

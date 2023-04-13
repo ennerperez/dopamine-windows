@@ -29,6 +29,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.16" />
         <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
     </ItemGroup>
@@ -49,15 +50,18 @@
         <PackageReference Include="Avalonia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
+        <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.19" />
         <PackageReference Include="Avalonia.Skia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Svg.Skia" Version="0.10.18" />
-        <!--
-        <PackageReference Include="Prism.Avalonia" Version="8.1.97.2" />
-        <PackageReference Include="Prism.DryIoc.Avalonia" Version="8.1.97.2" />
-        -->
+        <!---->
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.19" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
+    </ItemGroup>
+
+    <ItemGroup Label="Prism">
+        <PackageReference Include="Prism.Avalonia " Version="8.1.97.2" />
+        <PackageReference Include="Prism.DryIoc.Avalonia " Version="8.1.97.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -71,16 +75,48 @@
     <ItemGroup>
         <ProjectReference Include="..\Amphetamine.Core\Amphetamine.Core.csproj" />
         <ProjectReference Include="..\Amphetamine.Data\Amphetamine.Data.csproj" />
+        <ProjectReference Include="..\Amphetamine.Services\Amphetamine.Services.csproj" />
+        <ProjectReference Include="..\Amphetamine.Shell\Amphetamine.Shell.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="appsettings.json" />
-        <Content Include="appsettings.json">
+        <EmbeddedResource Include="appsettings.json" />
+        <None Remove="appsettings.Development.json" Condition="'$(Configuration)' == 'Release'" />
+        <Content Include="appsettings.Development.json" Condition="'$(Configuration)' == 'Debug'">
+            <DependentUpon>appsettings.json</DependentUpon>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <None Remove="appsettings.Development.json" />
-        <Content Include="appsettings.Development.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <None Remove="usersettings.Development.json" />
+        <Content Include="usersettings.Development.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>usersettings.json</DependentUpon>
+        </Content>
+        <None Remove="usersettings.json" />
+        <Content Include="usersettings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Converters\Converters.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Fonts\fontawesome-webfont.ttf" />
+      <Resource Include="Resources\Fonts\fontawesome-webfont.ttf" />
+      <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+      <Resource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
+      <None Remove="Resources\Fonts\Monoglyceride.ttf" />
+      <Resource Include="Resources\Fonts\Monoglyceride.ttf" />
+      <None Remove="Resources\Fonts\segmdl2.ttf" />
+      <Resource Include="Resources\Fonts\segmdl2.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\MainWindow.axaml.cs">
+        <DependentUpon>MainWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>

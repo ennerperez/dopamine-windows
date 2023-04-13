@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Amphetamine.Core;
 using Amphetamine.Data;
 using Amphetamine.Data.Contexts;
@@ -15,10 +16,12 @@ using Avalonia.ReactiveUI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-//using Prism.DryIoc;
+using Prism.DryIoc;
+using Prism.Ioc;
 using Serilog;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
+using ILogger=Serilog.ILogger;
 
 // ReSharper disable CommentTypo
 // ReSharper disable IdentifierTypo
@@ -30,9 +33,8 @@ namespace Amphetamine
 		public static bool IsRunning { get; internal set; } = false;
 
 		public static ILogger Logger { get; private set; }
+
 		public static IConfiguration Configuration { get; private set; }
-		public static IServiceCollection Services { get; private set; }
-		public static IServiceProvider Container { get; private set; }
 
 		public static bool IsSingleViewLifetime =>
 			Environment.GetCommandLineArgs()
@@ -46,7 +48,21 @@ namespace Amphetamine
 		{
 			AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 
-			Initialize(args);
+			var config = Configuration = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile(new EmbeddedFileProvider(typeof(Program).Assembly, typeof(Program).Namespace), "appsettings.json", optional: false, reloadOnChange: true)
+				.AddJsonFile("usersettings.json", optional: false, reloadOnChange: true)
+#if DEBUG
+				.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+				.AddJsonFile("usersettings.Development.json", optional: true, reloadOnChange: true)
+#endif
+				.AddEnvironmentVariables()
+				.Build();
+
+			// Initialize Logger
+			Logger = Log.Logger = new LoggerConfiguration()
+				.ReadFrom.Configuration(config)
+				.CreateLogger();
 
 			double GetScaling()
 			{
@@ -72,77 +88,35 @@ namespace Amphetamine
 					}
 				}
 
-				Logger.LogInformation("Application Starting");
-				var builder = CreateAppBuilder();
-				// if (args.Contains("--fbdev"))
-				// {
-				// 	SilenceConsole();
-				// 	return builder.StartLinuxFbDev(args, scaling: GetScaling());
-				// }
-				// else if (args.Contains("--drm"))
-				// {
-				// 	SilenceConsole();
-				// 	return builder.StartLinuxDrm(args, scaling: GetScaling());
-				// }
-				// else
-				return builder.StartWithClassicDesktopLifetime(args);
+				Logger.Information("Application Starting");
+				var builder = BuildAvaloniaApp();
+				if (args.Contains("--fbdev"))
+				{
+					SilenceConsole();
+					return builder.StartLinuxFbDev(args, scaling: GetScaling());
+				}
+				else if (args.Contains("--drm"))
+				{
+					SilenceConsole();
+					return builder.StartLinuxDrm(args, scaling: GetScaling());
+				}
+				else
+					return builder.StartWithClassicDesktopLifetime(args);
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, "The Application failed to start");
+				Logger.Error(ex, "The Application failed to start");
 				throw;
 			}
 
 		}
 
-		private static void Initialize(string[] args)
-		{
-			var services = new ServiceCollection();
-
-			var config = Configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-#if DEBUG
-				.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
-#endif
-				.AddEnvironmentVariables()
-				.AddCommandLine(args)
-				.Build();
-
-			// Initialize Logger
-			var logger = Log.Logger = new LoggerConfiguration()
-				.ReadFrom.Configuration(config)
-				.CreateLogger();
-
-			services.AddSingleton(logger);
-
-			services.AddLogging(builder =>
-			{
-				builder.ClearProviders();
-				builder.AddSerilog(logger);
-			}).AddOptions();
-
-			services
-				.AddCore()
-				.AddData<DefaultContext>(m=> m.UseDbEngine(Configuration, providerName: DatabaseProviders.Sqlite), ServiceLifetime.Transient);
-
-			Services = services;
-			Container = Services.BuildServiceProvider();
-
-			var factory = Container.GetService<ILoggerFactory>();
-			if (factory != null)
-				Logger = factory.CreateLogger(typeof(Program));
-
-			var dbContext = Container.GetService<DbContext>();
-			if (dbContext != null)
-				dbContext.Initialize();
-		}
 		private static async void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			var ex = (Exception)e.ExceptionObject;
 			if (Logger != null)
 			{
-				Logger.LogError(ex, "{Message}", ex.Message);
+				Logger.Error(ex, "{Message}", ex.Message);
 			}
 			else
 			{
@@ -150,7 +124,7 @@ namespace Amphetamine
 				Console.WriteLine(ex.Message);
 				Console.ResetColor();
 			}
-			//await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+			await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
 		}
 
 		private static void SilenceConsole()
@@ -165,15 +139,15 @@ namespace Amphetamine
 		}
 
 		// Avalonia configuration, don't remove; also used by visual designer.
-		public static AppBuilder CreateAppBuilder() =>
+		public static AppBuilder BuildAvaloniaApp() =>
 			AppBuilder
 				.Configure<App>()
 				.UsePlatformDetect()
+				.LogToTrace()
+				.UseReactiveUI()
 				.With(new X11PlatformOptions {EnableMultiTouch = true, UseDBusMenu = true})
 				.With(new Win32PlatformOptions {EnableMultitouch = true, AllowEglInitialization = true})
 				.UseSkia()
-				.UseReactiveUI()
-				.UseManagedSystemDialogs()
-				.LogToTrace();
+				.UseManagedSystemDialogs();
 	}
 }

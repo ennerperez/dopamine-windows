@@ -2,9 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Extensions
 {
@@ -170,6 +175,32 @@ namespace Microsoft.Extensions
 
 				var concreteArguments = openConcretion.GenericTypeArguments;
 				return arguments.Length == concreteArguments.Length && openConcretion.CanBeCastTo(openInterface);
+			}
+		}
+	}
+
+	namespace Configurations
+	{
+		public static class Extensions
+		{
+			public static void Set<T>(this IConfiguration @this, string @namespace, string name, T value)
+			{
+				var configFile = "usersettings.json";
+				if (File.Exists(configFile))
+				{
+					var content = File.ReadAllText(configFile);
+					var model = JsonConvert.DeserializeObject<JObject>(content);
+					if (model.TryGetValue(@namespace, out var value1))
+						value1[name]?.Value<T>(value);
+
+					content = JsonConvert.SerializeObject(model);
+					File.WriteAllText(configFile, content);
+				}
+			}
+
+			public static T Get<T>(this IConfiguration @this, string @namespace, string name)
+			{
+				return @this.GetValue<T>($"{@namespace}:{name}");
 			}
 		}
 	}
