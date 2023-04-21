@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Amphetamine.Core.Enums;
+using Amphetamine.Core.Events;
 using Amphetamine.Core.Models;
 
 namespace Amphetamine.Core.Interfaces

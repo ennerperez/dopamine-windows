@@ -13,16 +13,10 @@
     <ItemGroup Label="Avalonia">
         <PackageReference Include="Avalonia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
         <PackageReference Include="Avalonia.Skia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Svg.Skia" Version="0.10.18" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.19" />
-    </ItemGroup>
-
-    <ItemGroup Label="Prism">
-        <PackageReference Include="Prism.Avalonia " Version="8.1.97.2" />
-        <PackageReference Include="Prism.DryIoc.Avalonia " Version="8.1.97.2" />
     </ItemGroup>
 
     <ItemGroup>

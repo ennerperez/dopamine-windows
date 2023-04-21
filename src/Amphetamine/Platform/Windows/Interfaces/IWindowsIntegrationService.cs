@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Amphetamine.Services.WindowsIntegration
+namespace Amphetamine.Interfaces
 {
 	public interface IWindowsIntegrationService
 	{

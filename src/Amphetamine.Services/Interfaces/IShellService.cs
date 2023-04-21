@@ -1,7 +1,8 @@
-﻿using Avalonia;
+﻿using Amphetamine.Services.Shell;
+using Avalonia;
 using Avalonia.Controls;
 
-namespace Amphetamine.Services.Shell
+namespace Amphetamine.Interfaces.Shell
 {
 	public delegate void WindowStateChangedEventHandler(object sender, WindowStateChangedEventArgs e);
 

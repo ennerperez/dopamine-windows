@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+// ReSharper disable IdentifierTypo
 
 namespace Amphetamine.Controls
 {

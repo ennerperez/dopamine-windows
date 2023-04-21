@@ -7,7 +7,6 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
         <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
         <TrimMode>copyused</TrimMode>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -19,6 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.15">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -49,7 +49,6 @@
     <ItemGroup Label="Avalonia">
         <PackageReference Include="Avalonia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.19" />
         <PackageReference Include="Avalonia.Skia" Version="0.10.19" />
         <PackageReference Include="Avalonia.Svg.Skia" Version="0.10.18" />
@@ -57,11 +56,6 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.19" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
-    </ItemGroup>
-
-    <ItemGroup Label="Prism">
-        <PackageReference Include="Prism.Avalonia " Version="8.1.97.2" />
-        <PackageReference Include="Prism.DryIoc.Avalonia " Version="8.1.97.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,6 +71,31 @@
         <ProjectReference Include="..\Amphetamine.Data\Amphetamine.Data.csproj" />
         <ProjectReference Include="..\Amphetamine.Services\Amphetamine.Services.csproj" />
         <ProjectReference Include="..\Amphetamine.Shell\Amphetamine.Shell.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('windows')) == false">
+        <Folder Remove="Platform\Windows" />
+        <AvaloniaXaml Remove="Platform\Windows\**" />
+        <Compile Remove="Platform\Windows\**" />
+        <EmbeddedResource Remove="Platform\Windows\**" />
+        <AvaloniaResource Remove="Platform\Windows\**" />
+        <None Remove="Platform\Windows\**" />
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('linux')) == false">
+        <Folder Remove="Platform\Linux" />
+        <AvaloniaXaml Remove="Platform\Linux\**" />
+        <Compile Remove="Platform\Linux\**" />
+        <EmbeddedResource Remove="Platform\Linux\**" />
+        <AvaloniaResource Remove="Platform\Linux\**" />
+        <None Remove="Platform\Linux\**" />
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('osx')) == false">
+        <Folder Remove="Platform\OSX" />
+        <AvaloniaXaml Remove="Platform\OSX\**" />
+        <Compile Remove="Platform\OSX\**" />
+        <EmbeddedResource Remove="Platform\OSX\**" />
+        <AvaloniaResource Remove="Platform\OSX\**" />
+        <None Remove="Platform\OSX\**" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,20 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Amphetamine.Controls.FullLogo">
+	<StackPanel Orientation="Horizontal">
+		<Grid>
+			<Viewbox Width="56" Height="56">
+				<Path x:Name="Droplet" Data="{StaticResource Droplet}" Fill="{Binding Accent, ElementName=This}"/>
+			</Viewbox>
+			<Viewbox Width="40" Height="40">
+				<Path x:Name="HeadPhone" Data="{StaticResource HeadPhone}" Fill="White"/>
+			</Viewbox>
+		</Grid>
+		<Label Margin="15,-4,0,0" Padding="0" Foreground="{Binding Foreground,ElementName=This}"
+		       FontFamily="avares://Amphetamine/Resources/Fonts/Monoglyceride.ttf#Monoglyceride" FontSize="44"
+		       Content="{Binding ApplicationName,ElementName=This,Converter={StaticResource StringToLowerConverter}}" />
+	</StackPanel>
+</UserControl>

@@ -8,7 +8,7 @@
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ContextMenuButton.axaml" /> -->
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/DataGridTracks.axaml" /> -->
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/FontStyles.axaml" /> -->
-		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/Geometries.axaml" /> -->
+		<ResourceInclude Source="avares://Amphetamine/Resources/Styles/Geometries.axaml" />
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/HotKey.axaml" /> -->
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/LinkButton.axaml" /> -->
 		<!-- <ResourceInclude Source="avares://Amphetamine/Resources/Styles/ListBoxAlbums.axaml" /> -->

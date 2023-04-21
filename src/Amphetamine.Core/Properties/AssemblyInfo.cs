@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -9,9 +10,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Amphetamine Business Layer")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-// [assembly: Guid("00000000-0000-0000-0000-000000000000")]
+[assembly: Guid("00000000-0000-0000-0000-000000000000")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
+
+[assembly: InternalsVisibleTo("Amphetamine.Services")]

@@ -61,7 +61,7 @@ namespace Amphetamine.Data.Entities
 
 		public string IndexingFailureReason { get; set; }
 
-		public long? Rating { get; set; }
+		public int Rating { get; set; }
 
 		public long? Love { get; set; }
 

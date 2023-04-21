@@ -9,28 +9,27 @@ namespace Amphetamine.Data
 {
 	public static class Extensions
 	{
-		public static Func<DbContext> DbContext { get; set; }
-
 		public static IServiceCollection AddData<TContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsBuilder = null, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped) where TContext : DbContext
 		{
-			services.AddDbContext<TContext>(optionsBuilder, serviceLifetime);
 			switch (serviceLifetime)
 			{
-				case ServiceLifetime.Transient:
-					services.AddTransient<DbContext, TContext>();
-					break;
 				case ServiceLifetime.Singleton:
 					services.AddSingleton<DbContext, TContext>();
 					break;
-				default:
+				case ServiceLifetime.Scoped:
 					services.AddScoped<DbContext, TContext>();
 					break;
+				case ServiceLifetime.Transient:
+					services.AddTransient<DbContext, TContext>();
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(serviceLifetime), serviceLifetime, null);
 			}
-			DbContext = () => services.BuildServiceProvider().GetRequiredService<TContext>();
 
 			services.AddFromAssembly(Assembly.GetExecutingAssembly());
 
 			return services;
+
 		}
 
 		#region FromAssembly

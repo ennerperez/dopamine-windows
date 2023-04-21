@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphetamine.Services", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphetamine.Shell", "src\Amphetamine.Shell\Amphetamine.Shell.csproj", "{172D79BE-5294-4E12-AD6C-5867914BBA42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApplication1", "AvaloniaApplication1\AvaloniaApplication1.csproj", "{9630A707-7DE7-4493-8459-6BEB15AA5085}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,5 +92,9 @@ Global
 		{172D79BE-5294-4E12-AD6C-5867914BBA42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{172D79BE-5294-4E12-AD6C-5867914BBA42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{172D79BE-5294-4E12-AD6C-5867914BBA42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9630A707-7DE7-4493-8459-6BEB15AA5085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9630A707-7DE7-4493-8459-6BEB15AA5085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9630A707-7DE7-4493-8459-6BEB15AA5085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9630A707-7DE7-4493-8459-6BEB15AA5085}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

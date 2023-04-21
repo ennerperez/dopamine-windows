@@ -1,6 +1,6 @@
 using System;
 
-namespace Amphetamine.Core
+namespace Amphetamine.Core.Events
 {
 	public class PlaybackInterruptedEventArgs : EventArgs
 	{

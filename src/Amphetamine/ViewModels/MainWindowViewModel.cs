@@ -1,10 +1,14 @@
-﻿using Prism.Regions;
+﻿
+using Amphetamine.Services.Interfaces;
 
 namespace Amphetamine.ViewModels
 {
-	public class MainWindowViewModel : ViewModelBase
+	public partial class MainWindowViewModel : ViewModelBase
 	{
-		public MainWindowViewModel(IRegionManager regionManager)
+
+		public ITaskbarService TaskbarService { get; }
+
+		public MainWindowViewModel()
 		{
 			// Since this is a basic ShellWindow, there's nothing
 			// to do here.

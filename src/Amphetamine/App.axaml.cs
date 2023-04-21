@@ -1,108 +1,91 @@
 using System;
-using System.IO;
-using System.Linq;
+using System.Reflection;
+using System.Threading;
 using Amphetamine.Core;
+using Amphetamine.Data;
+using Amphetamine.Data.Contexts;
 using Amphetamine.Shell;
+using Amphetamine.ViewModels;
 using Amphetamine.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Prism.DryIoc;
-using Prism.Ioc;
-using Prism.Modularity;
-using Prism.Regions;
-using Serilog;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Amphetamine
 {
-	public class App : PrismApplication
+	public partial class App : Application
 	{
 
-		public static bool IsSingleViewLifetime =>
-			Environment.GetCommandLineArgs()
-				.Any(a => a == "--fbdev" || a == "--drm");
-
-		public static AppBuilder BuildAvaloniaApp() =>
-			AppBuilder
-				.Configure<App>()
-				.UsePlatformDetect();
+#pragma warning disable CS0414
+		private static Mutex s_instanceMutex = null;
+ #pragma warning restore CS0414
 		public override void Initialize()
 		{
 			AvaloniaXamlLoader.Load(this);
-			base.Initialize();// <-- Required
-		}
 
-		protected override void RegisterTypes(IContainerRegistry containerRegistry)
-		{
-			containerRegistry.RegisterInstance(Program.Configuration);
-			containerRegistry.RegisterInstance(Program.Logger);
+			var services = new ServiceCollection();
 
-			// Register Services
-			//containerRegistry.Register<IRestService, RestService>();
-
-			// services.AddSingleton(logger);
-			//
-			// services.AddLogging(builder =>
-			// {
-			// 	builder.ClearProviders();
-			// 	builder.AddSerilog(logger);
-			// }).AddOptions();
-			//
-			// services
-			// 	.AddCore()
-			// 	.AddData<DefaultContext>(m => m.UseDbEngine(Configuration, providerName: DatabaseProviders.Sqlite), ServiceLifetime.Transient)
-			// 	.AddServices();
-			//
-			// Services = services;
-			// Container = Services.BuildServiceProvider();
-			//
-			// var factory = Container.GetService<ILoggerFactory>();
-			// if (factory != null)
-			// 	Logger = factory.CreateLogger(typeof(Program));
-			//
-			// var dbContext = Container.GetService<DbContext>();
-			// if (dbContext != null)
-			// 	dbContext.Initialize();
-
-			// Views - Generic
-			containerRegistry.Register<MainWindow>();
-
-			containerRegistry
+			services
 				.AddCore()
-				.AddServices();
+				.AddData<DefaultContext>(options => options.UseDbEngine(Program.Configuration), ServiceLifetime.Singleton)
+				//.AddServices()
+				.AddShell();
 
-			// Views - Region Navigation
-			// containerRegistry.RegisterForNavigation<DashboardView, DashboardViewModel>();
-			// containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
-			// containerRegistry.RegisterForNavigation<SidebarView, SidebarViewModel>();
+			Program.ServiceProvider = services.BuildServiceProvider();
 		}
 
-		protected override AvaloniaObject CreateShell()
+		protected void OnStartup(EventArgs e)
 		{
-			// if (IsSingleViewLifetime)
-			// 	return Container.Resolve<MainControl>();// For Linux Framebuffer or DRM
-			// else
-			return Container.Resolve<MainWindow>();
+			// Create a jump-list and assign it to the current application
+			//JumpList.SetJumpList(Current, new JumpList());
+
+			// Check that there is only one instance of the application running
+			s_instanceMutex = new Mutex(true, $"{Program.Assembly.Guid()}-{Program.Assembly.Version()}", out var isNewInstance);
+
+			// Process the command-line arguments
+			ProcessCommandLineArguments(isNewInstance);
+
+			if (isNewInstance)
+			{
+				s_instanceMutex.ReleaseMutex();
+				CreateOrMigrateDatabase();
+				//base.OnStartup(e);
+			}
+			else
+			{
+				Program.Logger.Warning("{Name} is already running. Shutting down", Program.Assembly.Product());
+				//this.Shutdown();
+			}
+
+		}
+		private void ProcessCommandLineArguments(bool isNewInstance)
+		{
+			// Get the command-line arguments
+			var args = Environment.GetCommandLineArgs();
+			if (args.Length > 1)
+			{
+				Program.Logger.Information("Found command-line arguments");
+			}
 		}
 
-		protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+		public override void OnFrameworkInitializationCompleted()
 		{
-			// Register modules
-			// moduleCatalog.AddModule<Module1.Module>();
-			// moduleCatalog.AddModule<Module2.Module>();
-			// moduleCatalog.AddModule<Module3.Module>();
+			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				OnStartup(EventArgs.Empty);
+				desktop.MainWindow = new MainWindow {DataContext = new MainWindowViewModel(),};
+			}
+
+			base.OnFrameworkInitializationCompleted();
 		}
 
-		/// <summary>Called after <seealso cref="Initialize"/>.</summary>
-		protected override void OnInitialized()
+		private void CreateOrMigrateDatabase()
 		{
-			// Register initial Views to Region.
-			var regionManager = Container.Resolve<IRegionManager>();
-			// regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(DashboardView));
-			// regionManager.RegisterViewWithRegion(RegionNames.SidebarRegion, typeof(SidebarView));
+			var context = Program.ServiceProvider.GetRequiredService<DbContext>();
+			context.Database.EnsureCreated();
+			context.Database.Migrate();
 		}
 
 	}

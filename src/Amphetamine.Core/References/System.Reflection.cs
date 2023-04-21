@@ -1,5 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace System.Reflection
 {
@@ -83,6 +84,14 @@ namespace System.Reflection
 			if (string.IsNullOrWhiteSpace(s_informationalVersion))
 				s_informationalVersion = @this.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault()?.InformationalVersion;
 			return s_informationalVersion;
+		}
+
+		private static Guid s_guid;
+		public static Guid Guid(this Assembly @this)
+		{
+			if (s_guid != System.Guid.Empty)
+				System.Guid.TryParse(@this.GetCustomAttributes(typeof(GuidAttribute), true).OfType<GuidAttribute>().FirstOrDefault()?.Value, out s_guid);
+			return s_guid;
 		}
 	}
 

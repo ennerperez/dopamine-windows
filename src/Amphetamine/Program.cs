@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Amphetamine.Core;
@@ -12,14 +13,11 @@ using Amphetamine.Data.Contexts;
 using Amphetamine.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Dialogs;
-using Avalonia.ReactiveUI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Prism.DryIoc;
-using Prism.Ioc;
 using Serilog;
 using ILogger=Serilog.ILogger;
 
@@ -36,6 +34,10 @@ namespace Amphetamine
 
 		public static IConfiguration Configuration { get; private set; }
 
+		public static Assembly Assembly { get; private set; } = Assembly.GetAssembly(typeof(Program));
+
+		public static IServiceProvider ServiceProvider  { get; internal set; }
+
 		public static bool IsSingleViewLifetime =>
 			Environment.GetCommandLineArgs()
 				.Any(a => a == "--fbdev" || a == "--drm");
@@ -46,6 +48,7 @@ namespace Amphetamine
 		[STAThread]
 		public static int Main(string[] args)
 		{
+
 			AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 
 			var config = Configuration = new ConfigurationBuilder()
@@ -64,14 +67,14 @@ namespace Amphetamine
 				.ReadFrom.Configuration(config)
 				.CreateLogger();
 
-			double GetScaling()
-			{
-				var idx = Array.IndexOf(args, "--scaling");
-				if (idx != 0 && args.Length > idx + 1 &&
-				    double.TryParse(args[idx + 1], NumberStyles.Any, CultureInfo.InvariantCulture, out var scaling))
-					return scaling;
-				return 1;
-			}
+			// double GetScaling()
+			// {
+			// 	var idx = Array.IndexOf(args, "--scaling");
+			// 	if (idx != 0 && args.Length > idx + 1 &&
+			// 	    double.TryParse(args[idx + 1], NumberStyles.Any, CultureInfo.InvariantCulture, out var scaling))
+			// 		return scaling;
+			// 	return 1;
+			// }
 
 			try
 			{
@@ -90,18 +93,18 @@ namespace Amphetamine
 
 				Logger.Information("Application Starting");
 				var builder = BuildAvaloniaApp();
-				if (args.Contains("--fbdev"))
-				{
-					SilenceConsole();
-					return builder.StartLinuxFbDev(args, scaling: GetScaling());
-				}
-				else if (args.Contains("--drm"))
-				{
-					SilenceConsole();
-					return builder.StartLinuxDrm(args, scaling: GetScaling());
-				}
-				else
-					return builder.StartWithClassicDesktopLifetime(args);
+				// if (args.Contains("--fbdev"))
+				// {
+				// 	SilenceConsole();
+				// 	return builder.StartLinuxFbDev(args, scaling: GetScaling());
+				// }
+				// else if (args.Contains("--drm"))
+				// {
+				// 	SilenceConsole();
+				// 	return builder.StartLinuxDrm(args, scaling: GetScaling());
+				// }
+				// else
+				return builder.StartWithClassicDesktopLifetime(args);
 			}
 			catch (Exception ex)
 			{
@@ -124,7 +127,7 @@ namespace Amphetamine
 				Console.WriteLine(ex.Message);
 				Console.ResetColor();
 			}
-			await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+			//await MessageBox.Show((Window)(Application.Current as Application)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
 		}
 
 		private static void SilenceConsole()
@@ -144,7 +147,6 @@ namespace Amphetamine
 				.Configure<App>()
 				.UsePlatformDetect()
 				.LogToTrace()
-				.UseReactiveUI()
 				.With(new X11PlatformOptions {EnableMultiTouch = true, UseDBusMenu = true})
 				.With(new Win32PlatformOptions {EnableMultitouch = true, AllowEglInitialization = true})
 				.UseSkia()

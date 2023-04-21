@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -66,7 +65,55 @@ namespace Microsoft.Extensions
 					}
 				}
 			}
-
+			// public static void ConnectImplementationsToTypesClosing(this IContainerRegistry services, Type openRequestInterface, IEnumerable<Assembly> assembliesToScan, bool addIfAlreadyExists)
+			// {
+			// 	var concretions = new List<Type>();
+			// 	var interfaces = new List<Type>();
+			// 	foreach (var type in assembliesToScan.SelectMany(a => a.DefinedTypes).Where(t => !t.IsOpenGeneric()))
+			// 	{
+			// 		var interfaceTypes = type.FindInterfacesThatClose(openRequestInterface).ToArray();
+			// 		if (!interfaceTypes.Any()) continue;
+			//
+			// 		if (type.IsConcrete())
+			// 		{
+			// 			concretions.Add(type);
+			// 		}
+			//
+			// 		foreach (var interfaceType in interfaceTypes)
+			// 		{
+			// 			interfaces.Fill(interfaceType);
+			// 		}
+			// 	}
+			//
+			// 	foreach (var @interface in interfaces)
+			// 	{
+			// 		var exactMatches = concretions.Where(x => x.CanBeCastTo(@interface)).ToList();
+			// 		if (addIfAlreadyExists)
+			// 		{
+			// 			foreach (var type in exactMatches)
+			// 			{
+			// 				services.Register(@interface, type);
+			// 			}
+			// 		}
+			// 		else
+			// 		{
+			// 			if (exactMatches.Count > 1)
+			// 			{
+			// 				exactMatches.RemoveAll(m => !m.IsMatchingWithInterface(@interface));
+			// 			}
+			//
+			// 			foreach (var type in exactMatches)
+			// 			{
+			// 				services.Register(@interface, type);
+			// 			}
+			// 		}
+			//
+			// 		if (!@interface.IsOpenGeneric())
+			// 		{
+			// 			AddConcretionsThatCouldBeClosed(services, @interface, concretions);
+			// 		}
+			// 	}
+			// }
 			internal static void AddConcretionsThatCouldBeClosed(this IServiceCollection services, Type @interface, List<Type> concretions)
 			{
 				foreach (var type in concretions
@@ -82,7 +129,21 @@ namespace Microsoft.Extensions
 					}
 				}
 			}
-
+			// internal static void AddConcretionsThatCouldBeClosed(this IContainerRegistry services, Type @interface, List<Type> concretions)
+			// {
+			// 	foreach (var type in concretions
+			// 		         .Where(x => x.IsOpenGeneric() && x.CouldCloseTo(@interface)))
+			// 	{
+			// 		try
+			// 		{
+			// 			services.Register(@interface, type.MakeGenericType(@interface.GenericTypeArguments));
+			// 		}
+			// 		catch (Exception)
+			// 		{
+			// 			// ignored
+			// 		}
+			// 	}
+			// }
 			private static bool IsOpenGeneric(this Type type)
 			{
 				return type.GetTypeInfo().IsGenericTypeDefinition || type.GetTypeInfo().ContainsGenericParameters;
@@ -179,7 +240,7 @@ namespace Microsoft.Extensions
 		}
 	}
 
-	namespace Configurations
+	namespace Configuration
 	{
 		public static class Extensions
 		{
